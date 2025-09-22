@@ -1,40 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head<link rel="stylesheet" href="style.css">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Razorachat – Chat with AI</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">R</div>
+    <h1>Razorachat – Chat with AI</h1>
+  </header>
+  <div id="chat-container"></div>
+  <div id="input-container">
+    <input type="text" id="user-input" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const chatContainer = document.getElementById("chat-container");
+    const userInput = document.getElementById("user-input");
+
+    // Load saved chat from localStorage
+    window.onload = () => {
+      const savedChat = JSON.parse(localStorage.getItem("razorachat")) || [];
+      savedChat.forEach(msg => addMessage(msg.text, msg.sender, false));
+    };
+
+    function addMessage(text, sender, save = true) {
+      const msg = document.createElement("div");
+      msg.className = `message ${sender}`;
+      msg.innerText = text;
+      chatContainer.appendChild(msg);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      if (save) {
+        let chatHistory = JSON.parse(localStorage.getItem("razorachat")) || [];
+        chatHistory.push({ text, sender });
+        localStorage.setItem("razorachat", JSON.stringify(chatHistory));
+      }
     }
-    header {
-      display: flex;
-      align-items: center;
-      background-color: #1e3a8a;
-      color: white;
-      padding: 10px 20px;
+
+    async function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, "user");
+      userInput.value = "";
+
+      // Simulasi respon AI (ganti dengan API asli)
+      addMessage("Thinking...", "bot", false);
+      setTimeout(async () => {
+        document.querySelectorAll(".bot").slice(-1)[0]?.remove();
+
+        try {
+          const botReply = "This is a demo response. Connect me to an AI API!";
+          addMessage(botReply, "bot");
+        } catch (err) {
+          addMessage("Error fetching response.", "bot");
+        }
+      }, 1000);
     }
-    header h1 {
-      font-size: 18px;
-      margin: 0 0 0 10px;
-    }
-    header .logo {
-      width: 32px;
-      height: 32px;
-      background-color: white;
-      color: #1e3a8a;
-      font-weight: bold;
-      font-size: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
+
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>      border-radius: 50%;
     }
     #chat-container {
       flex: 1;
