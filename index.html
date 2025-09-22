@@ -290,6 +290,17 @@
         let isDictionaryMode = false;
         let userName = null;
 
+        const offlineDictionary = {
+            'cinta': 'perasaan kasih sayang yang mendalam terhadap seseorang.',
+            'bahagia': 'keadaan atau perasaan senang dan tenteram.',
+            'sedih': 'keadaan atau perasaan yang tidak senang karena suatu hal.',
+            'teman': 'orang yang menjalin hubungan persahabatan.',
+            'kelompok': 'sekumpulan orang yang memiliki tujuan yang sama.',
+            'razora': 'nama chatbot ini, dibuat oleh Kelompok 2.',
+            'html': 'bahasa markah standar untuk membuat halaman web.',
+            'javascript': 'bahasa pemrograman yang digunakan untuk membuat halaman web interaktif.'
+        };
+
         const pantunList = [
             "Jalan-jalan ke kota hujan,\nJangan lupa membeli sate.\nWalau hati sedang kesepian,\nSemoga besok ada yang nemenin date.",
             "Ikan hiu makan tomat,\nTomatnya digoreng di wajan.\nI love you so much,\nDari saya yang tampan.",
@@ -318,14 +329,7 @@
         const responses = [
           { 
             keywords: ['halo','hai','yo','hey'], 
-            reply: (name) => {
-              const replies = [
-                `Yo ${name ? name : 'bro/jo'}! Senang banget ketemu kamu. Mau ngobrol apa hari ini?`,
-                `Hai${name ? ' ' + name : ''}, ada yang bisa dibantu?`,
-                `Halo! Apa kabar hari ini?`
-              ];
-              return replies[Math.floor(Math.random() * replies.length)];
-            }
+            reply: (name) => `Halo${name ? ' ' + name : ''}, apa kabar?`
           },
           { 
             keywords: ['selamat pagi'], 
@@ -342,17 +346,6 @@
                 `Aku baik, makasih sudah nanya. Semoga kabarmu juga oke${name ? ' ya, ' + name : ''}.`,
                 `Aku baik-baik aja kok! Gimana denganmu?`,
                 `Luar biasa! Ada yang bisa aku bantu?`
-              ];
-              return replies[Math.floor(Math.random() * replies.length)];
-            }
-          },
-          { 
-            keywords: ['apa kabar kamu'], 
-            reply: (name) => {
-              const replies = [
-                `Aku baik, terima kasih sudah bertanya! Senang bisa ngobrol denganmu${name ? ', ' + name : ''}.`,
-                `Aku baik, aku selalu siap kalau kamu butuh teman cerita.`,
-                `Sangat baik! Apalagi kalau bisa bantu kamu. Ada yang bisa aku lakukan?`
               ];
               return replies[Math.floor(Math.random() * replies.length)];
             }
@@ -515,12 +508,22 @@
         ];
 
         function evaluateMath(message) {
-          message = message.replace(/[^0-9+\-*/(). ]/g,'');
-          try {
-            let result = eval(message);
-            if(result !== undefined) return `Hasilnya: ${result}`;
-          } catch {
-            return null;
+          const match = message.match(/hitung\s*(\S+)\s*([\+\-\*\/])\s*(\S+)/i);
+          if (match) {
+            const num1 = parseFloat(match[1]);
+            const operator = match[2];
+            const num2 = parseFloat(match[3]);
+            if (!isNaN(num1) && !isNaN(num2)) {
+              let result;
+              switch (operator) {
+                case '+': result = num1 + num2; break;
+                case '-': result = num1 - num2; break;
+                case '*': result = num1 * num2; break;
+                case '/': result = num1 / num2; break;
+                default: return null;
+              }
+              return `Hasilnya: ${result}`;
+            }
           }
           return null;
         }
@@ -557,9 +560,6 @@
         async function getBotReply(message) {
             const profanityList = ['tobrut', 'kontol', 'jembud', 'bangsat', 'asu'];
             
-            const selfKeywords = ['aku', 'saya', 'gue'];
-            const botKeywords = ['kamu', 'lo', 'lu', 'razora'];
-
             const lowerCaseMessage = message.toLowerCase();
 
             for (const word of profanityList) {
@@ -570,59 +570,39 @@
             
             if (isDictionaryMode) {
                 const word = lowerCaseMessage.trim();
-                const definition = await getDictionaryEntry(word);
-                return definition;
+                const definition = offlineDictionary[word];
+                if (definition) {
+                    return definition;
+                }
+                
+                const definitionOnline = await getDictionaryEntry(word);
+                return definitionOnline;
             }
             
             if (!userName) {
-                for (const keyword of selfKeywords) {
-                    if (lowerCaseMessage.includes(keyword) && lowerCaseMessage.includes('nama') && !lowerCaseMessage.includes('kamu')) {
-                        const nameMatch = lowerCaseMessage.match(/nama (aku|saya|gue) (adalah )?(.+)/);
-                        if (nameMatch && nameMatch[3]) {
-                            userName = nameMatch[3].split(' ')[0].trim();
-                            return `Halo, ${userName}! Senang bertemu denganmu.`;
-                        }
-                    }
+                const nameMatch = lowerCaseMessage.match(/nama (aku|saya|gue|gw) (adalah )?([a-z]+)/i);
+                if (nameMatch && nameMatch[3]) {
+                    userName = nameMatch[3].charAt(0).toUpperCase() + nameMatch[3].slice(1);
+                    return `Halo, ${userName}! Senang bertemu denganmu.`;
                 }
             }
             
-            const mathResult = evaluateMath(message);
+            const mathResult = evaluateMath(lowerCaseMessage);
             if(mathResult) return mathResult;
             
-            for (const keyword of botKeywords) {
-                if (lowerCaseMessage.includes(keyword)) {
-                    const replies = [
-                        'Aku di sini, siap membantu. Ada yang bisa kamu tanyakan?',
-                        'Ya, ada apa? Aku siap dengerin ceritamu.',
-                        'Aku di sini kok. Jangan sungkan untuk bertanya.'
-                    ];
-                    return replies[Math.floor(Math.random() * replies.length)];
-                }
-            }
-
             if (lowerCaseMessage.includes('arafah')) {
                 return 'Aku kenal banget! Dia penciptaku, aku kangen banget sama dia.';
             } else if (lowerCaseMessage.includes('fawwaz') || lowerCaseMessage.includes('reffie') || lowerCaseMessage.includes('devin') || lowerCaseMessage.includes('yoga')) {
                 return 'Tentu! Mereka adalah rekan-rekan saya di Kelompok 2. Kami bekerja sama membuat saya, lho!';
             }
 
-            const dictionaryKeywords = ['apa itu', 'arti', 'definisi'];
-            for(const keyword of dictionaryKeywords) {
-                if (lowerCaseMessage.startsWith(keyword + ' ')) {
-                    const word = lowerCaseMessage.substring(keyword.length).trim();
-                    const definition = await getDictionaryEntry(word);
-                    return definition;
-                }
-            }
-
-            for(let i=0;i<responses.length;i++){
-                for(let j=0;j<responses[i].keywords.length;j++){
-                    if(lowerCaseMessage.includes(responses[i].keywords[j])){
-                        const replyFunction = responses[i].reply;
-                        if (typeof replyFunction === 'function') {
-                            return replyFunction(userName);
+            for(const response of responses){
+                for(const keyword of response.keywords){
+                    if(lowerCaseMessage.includes(keyword)){
+                        if(typeof response.reply === 'function'){
+                            return response.reply(userName);
                         } else {
-                            return replyFunction;
+                            return response.reply;
                         }
                     }
                 }
@@ -646,8 +626,8 @@
             }
         }
 
-        async function sendMessage() {
-            const userText = userInput.value.trim();
+        async function sendMessage(message = userInput.value) {
+            const userText = message.trim();
             if (userText === '') return;
 
             const userMessageDiv = document.createElement('div');
@@ -688,28 +668,14 @@
 
         aboutRazoraButton.addEventListener('click', (event) => {
             event.preventDefault();
-            const userText = 'apa itu razora chat';
-            const userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'message user-message';
-            userMessageDiv.textContent = userText;
-            messagesContainer.appendChild(userMessageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
             dropdownMenu.style.display = 'none';
-            sendMessage(userText);
+            sendMessage('apa itu razora chat');
         });
 
         kataMutiaraButton.addEventListener('click', (event) => {
             event.preventDefault();
-            const userText = 'kata mutiara';
-            const userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'message user-message';
-            userMessageDiv.textContent = userText;
-            messagesContainer.appendChild(userMessageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
             dropdownMenu.style.display = 'none';
-            sendMessage(userText);
+            sendMessage('kata mutiara');
         });
 
         backButton.addEventListener('click', () => {
@@ -732,7 +698,7 @@
             }
         });
 
-        sendButton.addEventListener('click', sendMessage);
+        sendButton.addEventListener('click', () => sendMessage());
         userInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
