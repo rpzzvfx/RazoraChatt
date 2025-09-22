@@ -1,267 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Razorachat AI</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #e6f0ff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .chat-container {
-      background: #fff;
-      width: 400px;
-      max-width: 90%;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    .chat-header {
-      background: #3399ff;
-      color: white;
-      text-align: center;
-      padding: 16px;
-      font-weight: bold;
-    }
-    .chat-messages {
-      flex: 1;
-      padding: 16px;
-      overflow-y: auto;
-    }
-    .message {
-      margin-bottom: 12px;
-      padding: 8px 12px;
-      border-radius: 12px;
-      max-width: 80%;
-      word-wrap: break-word;
-    }
-    .user { background: #cce0ff; align-self: flex-end; }
-    .bot { background: #f0f0f0; align-self: flex-start; }
-    .chat-input { display: flex; border-top: 1px solid #ddd; }
-    .chat-input input { flex: 1; padding: 12px; border: none; outline: none; }
-    .chat-input button {
-      background: #3399ff;
-      color: white;
-      border: none;
-      padding: 12px 16px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .chat-input button:hover { background: #2673cc; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asisten AI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chat-container {
+            background-color: #fff;
+            width: 450px;
+            max-width: 90%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-header {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-size: 1.25em;
+            font-weight: 600;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 85%;
+            word-wrap: break-word;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            color: #333;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        .bot-message {
+            background-color: #f1f0f0;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #e0e0e0;
+            background-color: #fafafa;
+            padding: 10px 15px;
+        }
+        .chat-input input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 1em;
+            background-color: transparent;
+        }
+        .chat-input button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+        .chat-input button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-  <div class="chat-container">
-    <div class="chat-header">Razorachat AI</div>
-    <div class="chat-messages" id="messages">
-      <div class="bot message">Halo! Saya Razorachat AI, siap ngobrol denganmu.</div>
+    <div class="chat-container">
+        <div class="chat-header">Asisten AI</div>
+        <div class="chat-messages" id="messages">
+            <div class="message bot-message">Halo! Saya adalah Asisten AI, siap membantu Anda.</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Ketik pesan Anda...">
+            <button id="sendButton">➤</button>
+        </div>
     </div>
-    <div class="chat-input">
-      <input type="text" id="userInput" placeholder="Ketik pesan...">
-      <button onclick="sendMessage()">Kirim</button>
-    </div>
-  </div>
+    <script>
+        const messagesContainer = document.getElementById('messages');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
 
-  <script>
-    const messagesContainer = document.getElementById('messages');
-    const userInput = document.getElementById('userInput');
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (text === '') return;
 
-    async function sendMessage() {
-      const text = userInput.value.trim();
-      if(!text) return;
+            // Menampilkan pesan pengguna
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'message user-message';
+            userMessageDiv.textContent = text;
+            messagesContainer.appendChild(userMessageDiv);
 
-      // tampilkan pesan user
-      const userMsg = document.createElement('div');
-      userMsg.className = 'message user';
-      userMsg.textContent = text;
-      messagesContainer.appendChild(userMsg);
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      userInput.value = '';
+            // Bersihkan input
+            userInput.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-      // balasan bot (sederhana demo, bisa ganti API call)
-      const botMsg = document.createElement('div');
-      botMsg.className = 'message bot';
-      botMsg.textContent = "Sedang mengetik...";
-      messagesContainer.appendChild(botMsg);
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            // Menampilkan pesan "Sedang mengetik..."
+            const botThinkingDiv = document.createElement('div');
+            botThinkingDiv.className = 'message bot-message';
+            botThinkingDiv.textContent = 'Sedang mengetik...';
+            messagesContainer.appendChild(botThinkingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-      // Contoh: panggil backend serverless function untuk OpenAI API
-      try {
-        const response = await fetch('YOUR_SERVERLESS_API_URL', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text })
+            try {
+                // Ganti URL ini dengan URL API backend Anda
+                const apiUrl = 'https://YOUR_API_ENDPOINT_HERE'; 
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+
+                const data = await response.json();
+                
+                // Perbarui pesan bot dengan balasan dari API
+                botThinkingDiv.textContent = data.reply || 'Maaf, terjadi kesalahan.';
+                
+            } catch (error) {
+                console.error('Terjadi kesalahan:', error);
+                botThinkingDiv.textContent = 'Maaf, terjadi kesalahan saat menghubungi AI.';
+            }
+
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
         });
-        const data = await response.json();
-        botMsg.textContent = data.reply;
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      } catch(e) {
-        botMsg.textContent = "Maaf, terjadi kesalahan. Coba lagi.";
-      }
-    }
-
-    userInput.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter') sendMessage();
-    });
-  </script>
-</body>
-</html>      if (save) {
-        let chatHistory = JSON.parse(localStorage.getItem("razorachat")) || [];
-        chatHistory.push({ text, sender });
-        localStorage.setItem("razorachat", JSON.stringify(chatHistory));
-      }
-    }
-
-    async function sendMessage() {
-      const text = userInput.value.trim();
-      if (!text) return;
-
-      addMessage(text, "user");
-      userInput.value = "";
-
-      // Simulasi respon AI (ganti dengan API asli)
-      addMessage("Thinking...", "bot", false);
-      setTimeout(async () => {
-        document.querySelectorAll(".bot").slice(-1)[0]?.remove();
-
-        try {
-          const botReply = "This is a demo response. Connect me to an AI API!";
-          addMessage(botReply, "bot");
-        } catch (err) {
-          addMessage("Error fetching response.", "bot");
-        }
-      }, 1000);
-    }
-
-    userInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") sendMessage();
-    });
-  </script>
-</body>
-</html>      border-radius: 50%;
-    }
-    #chat-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-    }
-    .message {
-      max-width: 70%;
-      padding: 10px 15px;
-      margin: 5px 0;
-      border-radius: 15px;
-      line-height: 1.4;
-    }
-    .user {
-      align-self: flex-end;
-      background-color: #1e3a8a;
-      color: white;
-      border-bottom-right-radius: 5px;
-    }
-    .bot {
-      align-self: flex-start;
-      background-color: white;
-      border: 1px solid #ddd;
-      color: #333;
-      border-bottom-left-radius: 5px;
-    }
-    #input-container {
-      display: flex;
-      padding: 10px;
-      border-top: 1px solid #ddd;
-      background: white;
-    }
-    #user-input {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      outline: none;
-    }
-    button {
-      margin-left: 10px;
-      background-color: #1e3a8a;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    button:hover {
-      background-color: #274bb5;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="logo">R</div>
-    <h1>Razorachat – Chat with AI</h1>
-  </header>
-  <div id="chat-container"></div>
-  <div id="input-container">
-    <input type="text" id="user-input" placeholder="Type your message..." />
-    <button onclick="sendMessage()">Send</button>
-  </div>
-
-  <script>
-    const chatContainer = document.getElementById("chat-container");
-    const userInput = document.getElementById("user-input");
-
-    // Load saved chat from localStorage
-    window.onload = () => {
-      const savedChat = JSON.parse(localStorage.getItem("razorachat")) || [];
-      savedChat.forEach(msg => addMessage(msg.text, msg.sender, false));
-    };
-
-    function addMessage(text, sender, save = true) {
-      const msg = document.createElement("div");
-      msg.className = `message ${sender}`;
-      msg.innerText = text;
-      chatContainer.appendChild(msg);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-
-      if (save) {
-        let chatHistory = JSON.parse(localStorage.getItem("razorachat")) || [];
-        chatHistory.push({ text, sender });
-        localStorage.setItem("razorachat", JSON.stringify(chatHistory));
-      }
-    }
-
-    async function sendMessage() {
-      const text = userInput.value.trim();
-      if (!text) return;
-
-      addMessage(text, "user");
-      userInput.value = "";
-
-      // Simulasi respon AI (ganti dengan API asli)
-      addMessage("Thinking...", "bot", false);
-      setTimeout(async () => {
-        document.querySelectorAll(".bot").slice(-1)[0]?.remove();
-
-        try {
-          const botReply = "This is a demo response. Connect me to an AI API!";
-          addMessage(botReply, "bot");
-        } catch (err) {
-          addMessage("Error fetching response.", "bot");
-        }
-      }, 1000);
-    }
-
-    userInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") sendMessage();
-    });
-  </script>
+    </script>
 </body>
 </html>
