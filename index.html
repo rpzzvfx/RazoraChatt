@@ -148,11 +148,11 @@
             z-index: 2000;
         }
         
-        /* Gaya untuk dropdown menu - Modifikasi untuk animasi */
+        /* Gaya untuk dropdown menu - Modifikasi untuk animasi fade in/out */
         .dropdown-menu {
             position: absolute;
-            top: 0; /* Ubah posisi top menjadi 0 */
-            left: 0; /* Ubah posisi left menjadi 0 */
+            top: 0; 
+            left: 0; 
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
@@ -161,14 +161,18 @@
             display: flex;
             flex-direction: column;
             width: 200px; 
-            height: 100%; /* Tambahkan tinggi 100% agar menutupi seluruh chat container */
-            transform: translateX(-100%); /* Sembunyikan di luar layar */
-            transition: transform 0.3s ease-in-out; /* Tambahkan transisi */
+            height: 100%;
+            
+            opacity: 0; /* Mulai dengan transparansi penuh */
+            visibility: hidden; /* Sembunyikan dari interaksi kursor */
+            transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Transisi untuk fade dan visibility */
         }
 
         /* Kelas untuk menampilkan menu */
         .dropdown-menu.active {
-            transform: translateX(0); /* Geser ke posisi terlihat */
+            opacity: 1; /* Tampilkan dengan opacity penuh */
+            visibility: visible; /* Buat bisa di-klik */
+            transition: opacity 0.3s ease-in-out; /* Hapus delay saat muncul */
         }
 
         .dropdown-menu a {
