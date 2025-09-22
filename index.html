@@ -7,57 +7,76 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            background-color: #e6e9f0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            position: relative;
+        }
+        .main-container {
+            position: relative;
+            width: 450px;
+            max-width: 90%;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .chat-container {
             background-color: #fff;
-            width: 400px;
-            max-width: 90%;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         .chat-header {
-            background-color: #007bff;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             color: white;
-            padding: 15px;
+            padding: 18px;
             text-align: center;
-            font-size: 1.2em;
-            font-weight: bold;
+            font-size: 1.5em;
+            font-weight: 700;
+            position: relative;
         }
         .chat-messages {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
-            max-height: 400px;
+            max-height: 70vh;
             display: flex;
             flex-direction: column;
         }
         .message {
-            margin-bottom: 10px;
-            padding: 10px 15px;
-            border-radius: 15px;
-            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 85%;
             word-wrap: break-word;
+            line-height: 1.5;
+            font-size: 0.95em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
         .user-message {
             background-color: #e3f2fd;
             color: #333;
             align-self: flex-end;
             border-bottom-right-radius: 5px;
+            animation: slideInRight 0.3s ease-out;
         }
         .bot-message {
             background-color: #f1f0f0;
             color: #333;
             align-self: flex-start;
             border-bottom-left-radius: 5px;
+            animation: slideInLeft 0.3s ease-out;
         }
         .typing-indicator {
             background-color: #f1f0f0;
@@ -65,16 +84,18 @@
             align-self: flex-start;
             border-bottom-left-radius: 5px;
             font-style: italic;
-            padding: 10px 15px;
-            border-radius: 15px;
-            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 85%;
             animation: fadeIn 0.5s;
+        }
+        .chat-input-area {
+            padding: 15px;
+            background-color: #fafafa;
+            border-top: 1px solid #e0e0e0;
         }
         .chat-input {
             display: flex;
-            border-top: 1px solid #e0e0e0;
-            background-color: #fafafa;
-            padding: 10px 15px;
         }
         .chat-input input {
             flex: 1;
@@ -88,17 +109,120 @@
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
             margin-left: 10px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 1.2em;
+            transition: transform 0.2s, background-color 0.3s;
         }
         .chat-input button:hover {
             background-color: #0056b3;
+            transform: scale(1.1);
+        }
+        .mode-button {
+            background: linear-gradient(45deg, #ffc107, #fd7e14);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .mode-button:hover {
+            background: linear-gradient(45deg, #ffca2c, #ff922b);
+            transform: scale(1.05);
+        }
+        
+        /* Gaya untuk menu titik tiga */
+        .menu-icon {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            font-size: 2em;
+            color: #333;
+            cursor: pointer;
+            z-index: 2000;
+        }
+        
+        /* Gaya untuk dropdown menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 60px;
+            left: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            width: 150px;
+        }
+        .dropdown-menu a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            display: block;
+            transition: background-color 0.2s;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f0f0f0;
         }
 
-        /* Animations */
+        /* Gaya untuk halaman anggota */
+        .anggota-page {
+            background-color: #fff;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+            padding: 2em;
+            text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .anggota-page h2 {
+            margin-bottom: 0.5em;
+            color: #333;
+        }
+        .anggota-page ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .anggota-page li {
+            font-size: 1.2em;
+            margin: 0.5em 0;
+            color: #555;
+        }
+        .anggota-page .back-button {
+            margin-top: 2em;
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .anggota-page .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -106,20 +230,55 @@
     </style>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="chat-header">RAZORA CHAT</div>
-        <div class="chat-messages" id="messages">
-            <div class="message bot-message">Halo! Saya adalah RAZORA CHAT, siap membantu Anda.</div>
+    <div class="main-container">
+        <span class="menu-icon" id="menuIcon">...</span>
+        <div class="dropdown-menu" id="dropdownMenu">
+            <a href="#" id="kelompok2Button">Kelompok 2</a>
         </div>
-        <div class="chat-input">
-            <input type="text" id="userInput" placeholder="Ketik pesan Anda...">
-            <button id="sendButton">Kirim</button>
+        
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-header" id="chatHeader">
+                RAZORA CHAT
+            </div>
+            <div class="chat-messages" id="messages">
+                <div class="message bot-message">Halo! Saya adalah RAZORA CHAT, siap membantu Anda.</div>
+            </div>
+            <div class="chat-input-area">
+                <button id="toggleModeButton" class="mode-button">Aktifkan Kamus</button>
+                <div class="chat-input">
+                    <input type="text" id="userInput" placeholder="Ketik pesan Anda...">
+                    <button id="sendButton">➤</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="anggota-page" id="anggotaPage">
+            <h2>Anggota Kelompok 2</h2>
+            <ul>
+                <li>Arafah</li>
+                <li>Fawwaz</li>
+                <li>Yoga</li>
+                <li>Devin</li>
+                <li>Reffie</li>
+            </ul>
+            <button class="back-button" id="backButton">Kembali ke Chat</button>
         </div>
     </div>
+
     <script>
+        const chatContainer = document.getElementById('chatContainer');
+        const anggotaPage = document.getElementById('anggotaPage');
+        const backButton = document.getElementById('backButton');
         const messagesContainer = document.getElementById('messages');
         const userInput = document.getElementById('userInput');
         const sendButton = document.getElementById('sendButton');
+        const toggleModeButton = document.getElementById('toggleModeButton');
+        const chatHeader = document.getElementById('chatHeader');
+        const menuIcon = document.getElementById('menuIcon');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const kelompok2Button = document.getElementById('kelompok2Button');
+        
+        let isDictionaryMode = false;
         
         const responses = [
           { keywords: ['halo','hai','yo','hey'], 
@@ -196,8 +355,66 @@
             reply: 'Aku bukan ahli cuaca, tapi aku harap hari ini cerah secerah senyummu.' }
         ];
 
-        function getBotReply(message) {
+        function evaluateMath(message) {
+          message = message.replace(/[^0-9+\-*/(). ]/g,'');
+          try {
+            let result = eval(message);
+            if(result !== undefined) return `Hasilnya: ${result}`;
+          } catch {
+            return null;
+          }
+          return null;
+        }
+
+        async function getDictionaryEntry(word) {
+            const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    return `Maaf, kata "${word}" tidak ditemukan.`;
+                }
+                const data = await response.json();
+                const entry = data[0];
+                let result = '';
+                if (entry && entry.meanings) {
+                    entry.meanings.forEach(meaning => {
+                        result += `**(${meaning.partOfSpeech})**\n`;
+                        if (meaning.definitions) {
+                            meaning.definitions.forEach(def => {
+                                result += `- ${def.definition}\n`;
+                                if (def.example) {
+                                    result += `  *Contoh*: ${def.example}\n`;
+                                }
+                            });
+                        }
+                    });
+                }
+                return result;
+            } catch (error) {
+                return 'Maaf, terjadi kesalahan saat mengambil data dari API.';
+            }
+        }
+
+        async function getBotReply(message) {
+            if (isDictionaryMode) {
+                const word = message.trim().toLowerCase();
+                const definition = await getDictionaryEntry(word);
+                return definition;
+            }
+
+            const mathResult = evaluateMath(message);
+            if(mathResult) return mathResult;
+
             message = message.toLowerCase();
+            const dictionaryKeywords = ['apa itu', 'arti', 'definisi'];
+            for(const keyword of dictionaryKeywords) {
+                if (message.startsWith(keyword + ' ')) {
+                    const word = message.substring(keyword.length).trim();
+                    const definition = await getDictionaryEntry(word);
+                    return definition;
+                }
+            }
+
             for(let i=0;i<responses.length;i++){
                 for(let j=0;j<responses[i].keywords.length;j++){
                     if(message.includes(responses[i].keywords[j])){
@@ -226,7 +443,7 @@
             }
         }
 
-        function sendMessage() {
+        async function sendMessage() {
             const userText = userInput.value.trim();
             if (userText === '') return;
             const userMessageDiv = document.createElement('div');
@@ -239,20 +456,57 @@
             // Tampilkan indikator mengetik sebelum memanggil bot
             showTypingIndicator();
 
-            setTimeout(() => {
-                const botReply = getBotReply(userText);
-                
-                // Hapus indikator mengetik setelah mendapatkan jawaban
-                removeTypingIndicator();
+            // Panggil bot dan tunggu jawabannya
+            const botReply = await getBotReply(userText);
+            
+            // Hapus indikator mengetik setelah mendapatkan jawaban
+            removeTypingIndicator();
 
-                const botMessageDiv = document.createElement('div');
-                botMessageDiv.className = 'message bot-message';
-                botMessageDiv.textContent = botReply;
-                messagesContainer.appendChild(botMessageDiv);
+            const botMessageDiv = document.createElement('div');
+            botMessageDiv.className = 'message bot-message';
+            botMessageDiv.style.whiteSpace = 'pre-wrap';
+            botMessageDiv.textContent = botReply;
+            messagesContainer.appendChild(botMessageDiv);
 
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }, 1000); // Tambahkan delay 1 detik agar indikator terlihat
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
+
+        menuIcon.addEventListener('click', () => {
+            dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!menuIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+
+        kelompok2Button.addEventListener('click', (event) => {
+            event.preventDefault();
+            chatContainer.style.display = 'none';
+            anggotaPage.style.display = 'flex';
+            dropdownMenu.style.display = 'none';
+        });
+
+        backButton.addEventListener('click', () => {
+            anggotaPage.style.display = 'none';
+            chatContainer.style.display = 'flex';
+        });
+
+        toggleModeButton.addEventListener('click', () => {
+            isDictionaryMode = !isDictionaryMode;
+            if (isDictionaryMode) {
+                chatHeader.textContent = 'RAZORA KAMUS';
+                toggleModeButton.textContent = 'Nonaktifkan Kamus';
+                userInput.placeholder = 'Ketik kata untuk dicari...';
+                messagesContainer.innerHTML = '<div class="message bot-message">Mode kamus aktif! Silakan ketik kata apa saja untuk mencari definisinya.</div>';
+            } else {
+                chatHeader.textContent = 'RAZORA CHAT';
+                toggleModeButton.textContent = 'Aktifkan Kamus';
+                userInput.placeholder = 'Ketik pesan Anda...';
+                messagesContainer.innerHTML = '<div class="message bot-message">Mode kamus dinonaktifkan. Sekarang kita bisa ngobrol lagi seperti biasa.</div>';
+            }
+        });
 
         sendButton.addEventListener('click', sendMessage);
         userInput.addEventListener('keydown', (e) => {
