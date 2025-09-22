@@ -148,20 +148,29 @@
             z-index: 2000;
         }
         
-        /* Gaya untuk dropdown menu */
+        /* Gaya untuk dropdown menu - Modifikasi untuk animasi */
         .dropdown-menu {
             position: absolute;
-            top: 60px;
-            left: 15px;
+            top: 0; /* Ubah posisi top menjadi 0 */
+            left: 0; /* Ubah posisi left menjadi 0 */
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
             z-index: 1000;
-            display: none;
+            display: flex;
             flex-direction: column;
             width: 200px; 
+            height: 100%; /* Tambahkan tinggi 100% agar menutupi seluruh chat container */
+            transform: translateX(-100%); /* Sembunyikan di luar layar */
+            transition: transform 0.3s ease-in-out; /* Tambahkan transisi */
         }
+
+        /* Kelas untuk menampilkan menu */
+        .dropdown-menu.active {
+            transform: translateX(0); /* Geser ke posisi terlihat */
+        }
+
         .dropdown-menu a {
             padding: 12px 18px; 
             text-decoration: none;
@@ -649,13 +658,14 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        menuIcon.addEventListener('click', () => {
-            dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+        menuIcon.addEventListener('click', (event) => {
+            event.stopPropagation();
+            dropdownMenu.classList.toggle('active');
         });
 
         document.addEventListener('click', (event) => {
             if (!menuIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.style.display = 'none';
+                dropdownMenu.classList.remove('active');
             }
         });
 
@@ -663,18 +673,18 @@
             event.preventDefault();
             chatContainer.style.display = 'none';
             anggotaPage.style.display = 'flex';
-            dropdownMenu.style.display = 'none';
+            dropdownMenu.classList.remove('active');
         });
 
         aboutRazoraButton.addEventListener('click', (event) => {
             event.preventDefault();
-            dropdownMenu.style.display = 'none';
+            dropdownMenu.classList.remove('active');
             sendMessage('apa itu razora chat');
         });
 
         kataMutiaraButton.addEventListener('click', (event) => {
             event.preventDefault();
-            dropdownMenu.style.display = 'none';
+            dropdownMenu.classList.remove('active');
             sendMessage('kata mutiara');
         });
 
