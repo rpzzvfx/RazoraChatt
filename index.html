@@ -396,6 +396,15 @@
         }
 
         async function getBotReply(message) {
+            const profanityList = ['tobrut', 'kontol', 'jembud', 'bangsat', 'asu'];
+
+            // Cek kata-kata tidak senonoh
+            for (const word of profanityList) {
+                if (message.toLowerCase().includes(word)) {
+                    return 'astaga! Maaf aku tidak dibolehin arafah untuk membahas hal tidak senonoh itu';
+                }
+            }
+
             if (isDictionaryMode) {
                 const word = message.trim().toLowerCase();
                 const definition = await getDictionaryEntry(word);
@@ -406,6 +415,14 @@
             if(mathResult) return mathResult;
 
             message = message.toLowerCase();
+
+            // Jawaban khusus untuk nama
+            if (message.includes('arafah')) {
+                return 'Aku kenal banget! Dia penciptaku, aku kangen banget sama dia.';
+            } else if (message.includes('fawwaz') || message.includes('reffie') || message.includes('devin') || message.includes('yoga')) {
+                return 'Tentu! Mereka adalah rekan-rekan saya di Kelompok 2. Kami bekerja sama membuat saya, lho!';
+            }
+
             const dictionaryKeywords = ['apa itu', 'arti', 'definisi'];
             for(const keyword of dictionaryKeywords) {
                 if (message.startsWith(keyword + ' ')) {
@@ -425,7 +442,6 @@
             return 'Maaf sayangg… aku nggak ngerti. Ceritain aku lebih detail biar aku bisa bantu kamu.';
         }
 
-        // Fungsi baru untuk menampilkan indikator mengetik
         function showTypingIndicator() {
             const typingDiv = document.createElement('div');
             typingDiv.className = 'message bot-message typing-indicator';
@@ -435,7 +451,6 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // Fungsi baru untuk menghilangkan indikator mengetik
         function removeTypingIndicator() {
             const typingDiv = document.getElementById('typingIndicator');
             if (typingDiv) {
@@ -453,15 +468,9 @@
             userInput.value = '';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            // Tampilkan indikator mengetik sebelum memanggil bot
             showTypingIndicator();
-
-            // Panggil bot dan tunggu jawabannya
             const botReply = await getBotReply(userText);
-            
-            // Hapus indikator mengetik setelah mendapatkan jawaban
             removeTypingIndicator();
-
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'message bot-message';
             botMessageDiv.style.whiteSpace = 'pre-wrap';
