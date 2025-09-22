@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Razorachat – Chat with AI</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      background-color: #1e3a8a;
+      color: white;
+      padding: 10px 20px;
+    }
+    header h1 {
+      font-size: 18px;
+      margin: 0 0 0 10px;
+    }
+    header .logo {
+      width: 32px;
+      height: 32px;
+      background-color: white;
+      color: #1e3a8a;
+      font-weight: bold;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    #chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .message {
+      max-width: 70%;
+      padding: 10px 15px;
+      margin: 5px 0;
+      border-radius: 15px;
+      line-height: 1.4;
+    }
+    .user {
+      align-self: flex-end;
+      background-color: #1e3a8a;
+      color: white;
+      border-bottom-right-radius: 5px;
+    }
+    .bot {
+      align-self: flex-start;
+      background-color: white;
+      border: 1px solid #ddd;
+      color: #333;
+      border-bottom-left-radius: 5px;
+    }
+    #input-container {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: white;
+    }
+    #user-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+    }
+    button {
+      margin-left: 10px;
+      background-color: #1e3a8a;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #274bb5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">R</div>
+    <h1>Razorachat – Chat with AI</h1>
+  </header>
+  <div id="chat-container"></div>
+  <div id="input-container">
+    <input type="text" id="user-input" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const chatContainer = document.getElementById("chat-container");
+    const userInput = document.getElementById("user-input");
+
+    // Load saved chat from localStorage
+    window.onload = () => {
+      const savedChat = JSON.parse(localStorage.getItem("razorachat")) || [];
+      savedChat.forEach(msg => addMessage(msg.text, msg.sender, false));
+    };
+
+    function addMessage(text, sender, save = true) {
+      const msg = document.createElement("div");
+      msg.className = `message ${sender}`;
+      msg.innerText = text;
+      chatContainer.appendChild(msg);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      if (save) {
+        let chatHistory = JSON.parse(localStorage.getItem("razorachat")) || [];
+        chatHistory.push({ text, sender });
+        localStorage.setItem("razorachat", JSON.stringify(chatHistory));
+      }
+    }
+
+    async function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, "user");
+      userInput.value = "";
+
+      // Simulasi respon AI (ganti dengan API asli)
+      addMessage("Thinking...", "bot", false);
+      setTimeout(async () => {
+        document.querySelectorAll(".bot").slice(-1)[0]?.remove();
+
+        try {
+          const botReply = "This is a demo response. Connect me to an AI API!";
+          addMessage(botReply, "bot");
+        } catch (err) {
+          addMessage("Error fetching response.", "bot");
+        }
+      }, 1000);
+    }
+
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>
