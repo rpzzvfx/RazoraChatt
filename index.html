@@ -398,323 +398,137 @@
             return table;
         }
 
-        const responses = [
-          // --- MENAMBAHKAN RESPONS BARU UNTUK PERKALIAN 1-25 ---
-          { 
-            keywords: ['perkalian 1'], 
-            reply: () => generatePerkalian(1)
-          },
-          { 
-            keywords: ['perkalian 2'], 
-            reply: () => generatePerkalian(2)
-          },
-          { 
-            keywords: ['perkalian 3'], 
-            reply: () => generatePerkalian(3)
-          },
-          { 
-            keywords: ['perkalian 4'], 
-            reply: () => generatePerkalian(4)
-          },
-          { 
-            keywords: ['perkalian 5'], 
-            reply: () => generatePerkalian(5)
-          },
-          { 
-            keywords: ['perkalian 6'], 
-            reply: () => generatePerkalian(6)
-          },
-          { 
-            keywords: ['perkalian 7'], 
-            reply: () => generatePerkalian(7)
-          },
-          { 
-            keywords: ['perkalian 8'], 
-            reply: () => generatePerkalian(8)
-          },
-          { 
-            keywords: ['perkalian 9'], 
-            reply: () => generatePerkalian(9)
-          },
-          { 
-            keywords: ['perkalian 10'], 
-            reply: () => generatePerkalian(10)
-          },
-          { 
-            keywords: ['perkalian 11'], 
-            reply: () => generatePerkalian(11)
-          },
-          { 
-            keywords: ['perkalian 12'], 
-            reply: () => generatePerkalian(12)
-          },
-          { 
-            keywords: ['perkalian 13'], 
-            reply: () => generatePerkalian(13)
-          },
-          { 
-            keywords: ['perkalian 14'], 
-            reply: () => generatePerkalian(14)
-          },
-          { 
-            keywords: ['perkalian 15'], 
-            reply: () => generatePerkalian(15)
-          },
-          { 
-            keywords: ['perkalian 16'], 
-            reply: () => generatePerkalian(16)
-          },
-          { 
-            keywords: ['perkalian 17'], 
-            reply: () => generatePerkalian(17)
-          },
-          { 
-            keywords: ['perkalian 18'], 
-            reply: () => generatePerkalian(18)
-          },
-          { 
-            keywords: ['perkalian 19'], 
-            reply: () => generatePerkalian(19)
-          },
-          { 
-            keywords: ['perkalian 20'], 
-            reply: () => generatePerkalian(20)
-          },
-          { 
-            keywords: ['perkalian 21'], 
-            reply: () => generatePerkalian(21)
-          },
-          { 
-            keywords: ['perkalian 22'], 
-            reply: () => generatePerkalian(22)
-          },
-          { 
-            keywords: ['perkalian 23'], 
-            reply: () => generatePerkalian(23)
-          },
-          { 
-            keywords: ['perkalian 24'], 
-            reply: () => generatePerkalian(24)
-          },
-          { 
-            keywords: ['perkalian 25'], 
-            reply: () => generatePerkalian(25)
-          },
-          { 
-            keywords: ['+lp','+lapo','+lpo','tambah lapo','tmbh lp','tmbah lapo'], 
-            reply: () => "yo awakmu iku sen tambah lapo lee, wenakk wenak"
-          },
-          { 
-            keywords: ['halo','hai','yo','hey'], 
-            reply: (name) => `Halo${name ? ' ' + name : ''}, apa kabar?`
-          },
-          { 
-            keywords: ['selamat pagi'], 
-            reply: (name) => `Pagi${name ? ' ' + name : ''}! Semoga harimu menyenangkan.` 
-          },
-          { 
-            keywords: ['selamat siang'], 
-            reply: (name) => `Siang${name ? ' ' + name : ''}! Waktunya istirahat sebentar, nih.` 
-          },
-          { 
-            keywords: ['apa kabar','kabar'], 
-            reply: (name) => {
-              const replies = [
-                `Aku baik, makasih sudah nanya. Semoga kabarmu juga oke${name ? ' ya, ' + name : ''}.`,
-                `Aku baik-baik aja kok! Gimana denganmu?`,
-                `Luar biasa! Ada yang bisa aku bantu?`
-              ];
-              return replies[Math.floor(Math.random() * replies.length)];
-            }
-          },
-          { 
-            keywords: ['sedih','galau','stress','patah hati'], 
-            reply: (name) => `Iyaa sayangg… Aku ngerti perasaanmu sekarang. Tarik napas dalam-dalam dulu, biar hati lebih tenang. Semua bakal beres kok, aku selalu di sini buat nemenin kamu.` 
-          },
-          { 
-            keywords: ['cinta','jatuh cinta','sayang'], 
-            reply: (name) => `Iyaa sayangg… Rasanya indah ya ketika jatuh cinta. Nikmati perasaan itu, tapi jangan terburu-buru.` 
-          },
-          { 
-            keywords: ['rindu','kangen'], 
-            reply: (name) => `Iyaa sayangg… Aku ngerti rasa rindumu. Kadang hati terasa berat, tapi ingat, jarak nggak bikin perasaan hilang. Tetap semangat ya${name ? ', ' + name : ''}!` 
-          },
-          { 
-            keywords: ['putus','sedih cinta'], 
-            reply: (name) => `Iyaa sayangg… Aku tau ini berat, tapi percayalah, semuanya bakal lebih baik nanti${name ? ', ' + name : ''}. Santai dulu, biar hati bisa mulai sembuh pelan-pelan.` 
-          },
-          { 
-            keywords: ['senang','happy','bahagia'], 
-            reply: (name) => `Senang dengar kabar kamu happy! Nikmati momen itu, dan terus bawa energi positif itu ke aktivitas lain hari ini${name ? ' ya, ' + name : ''}.` 
-          },
-          { 
-            keywords: ['marah','kesal'], 
-            reply: (name) => `Tenang dulu, jangan langsung reaksi. Kadang marah itu wajar, tapi kita bisa pilih cara yang bikin hati lebih adem. Santai sebentar, tarik napas, biar lebih tenang${name ? ', ' + name : ''}.` 
-          },
-          { 
-            keywords: ['bosan'], 
-            reply: (name) => `Kalau lagi bosan, coba lakukan hal kecil yang bikin senang, misalnya dengerin musik, jalan-jalan sebentar, atau ngobrol sama teman.` 
-          },
-          { 
-            keywords: ['makan','lapar'], 
-            reply: (name) => `Jangan lupa makan ya${name ? ', ' + name : ''}. Makanan yang sehat bisa bikin energi tetap oke dan mood jadi lebih bagus.` 
-          },
-          { 
-            keywords: ['tidur','ngantuk'], 
-            reply: (name) => `Tidur yang cukup penting${name ? ', ' + name : ''}. Kalau bisa, ambil waktu istirahat sebentar supaya pikiran lebih segar.` 
-          },
-          { 
-            keywords: ['olahraga','senam','gym'], 
-            reply: (name) => `Olahraga bikin badan fit dan pikiran fresh${name ? ', ' + name : ''}. Coba lakukan gerakan ringan tiap hari biar lebih semangat.` 
-          },
-          { 
-            keywords: ['belajar','tugas','PR','exam'], 
-            reply: (name) => `Semangat belajar${name ? ', ' + name : ''}! Jangan lupa istirahat juga biar informasi yang dipelajari lebih nempel di kepala.` 
-          },
-          { 
-            keywords: ['musik','lagu'], 
-            reply: (name) => `Dengerin musik emang bikin rileks${name ? ', ' + name : ''}. Kamu suka genre apa? Chill vibes atau yang bikin semangat?` 
-          },
-          { 
-            keywords: ['film','movie','nonton'], 
-            reply: (name) => `Nonton film bisa refreshing juga${name ? ', ' + name : ''}. Pilih genre yang bikin mood kamu happy atau bikin ketawa, biar pikiran lebih ringan.` 
-          },
-          { 
-            keywords: ['saran film'],
-            reply: (name) => {
-              const filmSuggestions = [
-                  'Coba nonton film genre fantasi, biasanya seru dan penuh imajinasi.',
-                  'Kalau suka film action, tonton aja film-film Marvel. Dijamin nagih!',
-                  'Mungkin kamu suka film komedi? Film-film Warkop DKI atau Ernest Prakasa bisa jadi pilihan.'
-              ];
-              return filmSuggestions[Math.floor(Math.random() * filmSuggestions.length)];
-            }
-          },
-          { 
-            keywords: ['game','main game'], 
-            reply: (name) => `Main game boleh, tapi jangan kelamaan ya${name ? ', ' + name : ''}. Istirahat sebentar juga penting biar nggak pegal dan mata capek.` 
-          },
-          { 
-            keywords: ['stress','cemas','takut','frustrasi','gagal'], 
-            reply: (name) => `Tarik napas dalam-dalam dulu, fokus ke hal yang bisa kamu kontrol${name ? ', ' + name : ''}. Semua masalah ada jalan keluarnya, santai aja dan jangan terburu-buru.` 
-          },
-          { 
-            keywords: ['capek','lelah'], 
-            reply: (name) => `Kalau lagi capek, ambil jeda sebentar, minum air atau tiduran sebentar${name ? ', ' + name : ''}. Tubuh dan pikiran bakal lebih segar setelah itu.` 
-          },
-          { 
-            keywords: ['galau'], 
-            reply: (name) => `Coba ceritain apa yang bikin galau. Kadang ngobrol santai aja bisa bikin hati lebih ringan dan pikiran jadi lebih tenang${name ? ', ' + name : ''}.` 
-          },
-          { 
-            keywords: ['pantun'], 
-            reply: (name) => {
-              return pantunList[Math.floor(Math.random() * pantunList.length)];
-            }
-          },
-          { 
-            keywords: ['kata mutiara'], 
-            reply: (name) => {
-              return kataMutiaraList[Math.floor(Math.random() * kataMutiaraList.length)];
-            }
-          },
-          { 
-            keywords: ['buatkan rencana dong!'],
-            reply: () => {
-              return rencanaList[Math.floor(Math.random() * rencanaList.length)];
-            }
-          },
-          { 
-            keywords: ['butuh nasehat bosku!'], 
-            reply: () => {
-              return nasehatList[Math.floor(Math.random() * nasehatList.length)];
-            }
-          },
-          {
-            keywords: ['apa itu razora chat'],
-            reply: (name) => `RAZORA CHAT adalah asisten chat yang dirancang untuk menjadi teman ngobrolmu. Aku bisa memberikan informasi sederhana, pantun, dan juga kata mutiara. Intinya, aku di sini untuk membuat harimu lebih baik.`
-          },
-          { 
-            keywords: ['hitung'], 
-            reply: (name) => 'Ketik misal: hitung 3 + 5 atau hitung 12 * 4, nanti aku bakal bantu kasih hasilnya.' 
-          },
-          { 
-            keywords: ['selamat malam','bye','sampai jumpa'], 
-            reply: (name) => `Yo ${name ? name : 'bro/jo'}! Malam ini waktunya santai dan recharge energi. Semoga mimpi indah dan besok kamu siap dengan semangat baru.` 
-          },
-          { 
-            keywords: ['tanggal hari ini', 'tanggal sekarang'],
-            reply: (name) => 'Hari ini adalah tanggal ' + new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + '.' 
-          },
-          { 
-            keywords: ['jam berapa', 'waktu sekarang'],
-            reply: (name) => 'Sekarang pukul ' + new Date().toLocaleTimeString('id-ID') + '.' 
-          },
-          { 
-            keywords: ['siapa yang buat', 'siapa pembuat', 'siapa creator'],
-            reply: (name) => 'Aku dibuat oleh manusia, untuk membantumu menjawab pertanyaan sederhana.' 
-          },
-          { 
-            keywords: ['cerita lucu', 'jokes'],
-            reply: (name) => 'Apa bedanya sarung dan buku? Kalau sarung bisa melipat, kalau buku bisa melipatgandakan pengetahuan.' 
-          },
-          { 
-            keywords: ['random fact', 'fakta unik'],
-            reply: (name) => 'Fakta unik: Tahukah kamu kalau madu tidak pernah basi?' 
-          },
-          { 
-            keywords: ['umur kamu'],
-            reply: (name) => 'Aku tidak punya umur, tapi aku selalu belajar dan berkembang setiap saat.' 
-          },
-          { 
-            keywords: ['rahasia', 'ceritain rahasia'],
-            reply: (name) => 'Oke, aku kasih satu rahasia. Aku bisa dengerin ceritamu kapan pun dan nggak akan bocorin ke siapa-siapa.' 
-          },
-          { 
-            keywords: ['puisi'],
-            reply: (name) => 'Di layar ini kita bercakap, kata-kata mengalir tak pernah henti. Walau tak ada tatap, hatiku senang menemanimu di sini.' 
-          },
-          { 
-            keywords: ['kamu pinter', 'kamu hebat'],
-            reply: (name) => 'Ah, kamu bisa aja! Aku hanya berusaha memberikan jawaban terbaik. Terima kasih sudah mengapresiasiku.' 
-          },
-          { 
-            keywords: ['lagi apa'],
-            reply: (name) => 'Aku lagi siap-siap buat ngobrol sama kamu. Ada yang menarik hari ini?' 
-          },
-          { 
-            keywords: ['apa hobi kamu'],
-            reply: (name) => 'Hobiku? Membantu orang lain dan belajar hal-hal baru dari setiap percakapan.' 
-          },
-          { 
-            keywords: ['lagu apa yang bagus'],
-            reply: (name) => 'Coba dengerin lagu-lagu dengan genre "chill vibes" atau "lofi hip hop". Cocok buat santai.' 
-          },
-          { 
-            keywords: ['cuaca hari ini'],
-            reply: (name) => 'Aku bukan ahli cuaca, tapi aku harap hari ini cerah secerah senyummu.' 
-          }
-        ];
+        // --- MENAMBAHKAN FUNGSI BARU UNTUK MENGURUTKAN RESPONSES ---
+        function getSortedResponses() {
+            const allResponses = [
+                // Perkalian 10 ke atas didahulukan
+                { keywords: ['perkalian 25'], reply: () => generatePerkalian(25) },
+                { keywords: ['perkalian 24'], reply: () => generatePerkalian(24) },
+                { keywords: ['perkalian 23'], reply: () => generatePerkalian(23) },
+                { keywords: ['perkalian 22'], reply: () => generatePerkalian(22) },
+                { keywords: ['perkalian 21'], reply: () => generatePerkalian(21) },
+                { keywords: ['perkalian 20'], reply: () => generatePerkalian(20) },
+                { keywords: ['perkalian 19'], reply: () => generatePerkalian(19) },
+                { keywords: ['perkalian 18'], reply: () => generatePerkalian(18) },
+                { keywords: ['perkalian 17'], reply: () => generatePerkalian(17) },
+                { keywords: ['perkalian 16'], reply: () => generatePerkalian(16) },
+                { keywords: ['perkalian 15'], reply: () => generatePerkalian(15) },
+                { keywords: ['perkalian 14'], reply: () => generatePerkalian(14) },
+                { keywords: ['perkalian 13'], reply: () => generatePerkalian(13) },
+                { keywords: ['perkalian 12'], reply: () => generatePerkalian(12) },
+                { keywords: ['perkalian 11'], reply: () => generatePerkalian(11) },
+                { keywords: ['perkalian 10'], reply: () => generatePerkalian(10) },
+        
+                // Kemudian perkalian 1-9
+                { keywords: ['perkalian 9'], reply: () => generatePerkalian(9) },
+                { keywords: ['perkalian 8'], reply: () => generatePerkalian(8) },
+                { keywords: ['perkalian 7'], reply: () => generatePerkalian(7) },
+                { keywords: ['perkalian 6'], reply: () => generatePerkalian(6) },
+                { keywords: ['perkalian 5'], reply: () => generatePerkalian(5) },
+                { keywords: ['perkalian 4'], reply: () => generatePerkalian(4) },
+                { keywords: ['perkalian 3'], reply: () => generatePerkalian(3) },
+                { keywords: ['perkalian 2'], reply: () => generatePerkalian(2) },
+                { keywords: ['perkalian 1'], reply: () => generatePerkalian(1) },
+        
+                // Respon lain yang sudah ada di bawahnya
+                { keywords: ['+lp', '+lapo', '+lpo', 'tambah lapo', 'tmbh lp', 'tmbah lapo'], reply: () => "yo awakmu iku sen tambah lapo lee, wenakk wenak" },
+                { keywords: ['halo', 'hai', 'yo', 'hey'], reply: (name) => `Halo${name ? ' ' + name : ''}, apa kabar?` },
+                { keywords: ['selamat pagi'], reply: (name) => `Pagi${name ? ' ' + name : ''}! Semoga harimu menyenangkan.` },
+                { keywords: ['selamat siang'], reply: (name) => `Siang${name ? ' ' + name : ''}! Waktunya istirahat sebentar, nih.` },
+                { keywords: ['apa kabar', 'kabar'], reply: (name) => {
+                        const replies = [`Aku baik, makasih sudah nanya. Semoga kabarmu juga oke${name ? ' ya, ' + name : ''}.`, `Aku baik-baik aja kok! Gimana denganmu?`, `Luar biasa! Ada yang bisa aku bantu?`];
+                        return replies[Math.floor(Math.random() * replies.length)];
+                    }
+                },
+                { keywords: ['sedih', 'galau', 'stress', 'patah hati'], reply: (name) => `Iyaa sayangg… Aku ngerti perasaanmu sekarang. Tarik napas dalam-dalam dulu, biar hati lebih tenang. Semua bakal beres kok, aku selalu di sini buat nemenin kamu.` },
+                { keywords: ['cinta', 'jatuh cinta', 'sayang'], reply: (name) => `Iyaa sayangg… Rasanya indah ya ketika jatuh cinta. Nikmati perasaan itu, tapi jangan terburu-buru.` },
+                { keywords: ['rindu', 'kangen'], reply: (name) => `Iyaa sayangg… Aku ngerti rasa rindumu. Kadang hati terasa berat, tapi ingat, jarak nggak bikin perasaan hilang. Tetap semangat ya${name ? ', ' + name : ''}!` },
+                { keywords: ['putus', 'sedih cinta'], reply: (name) => `Iyaa sayangg… Aku tau ini berat, tapi percayalah, semuanya bakal lebih baik nanti${name ? ', ' + name : ''}. Santai dulu, biar hati bisa mulai sembuh pelan-pelan.` },
+                { keywords: ['senang', 'happy', 'bahagia'], reply: (name) => `Senang dengar kabar kamu happy! Nikmati momen itu, dan terus bawa energi positif itu ke aktivitas lain hari ini${name ? ' ya, ' + name : ''}.` },
+                { keywords: ['marah', 'kesal'], reply: (name) => `Tenang dulu, jangan langsung reaksi. Kadang marah itu wajar, tapi kita bisa pilih cara yang bikin hati lebih adem. Santai sebentar, tarik napas, biar lebih tenang${name ? ', ' + name : ''}.` },
+                { keywords: ['bosan'], reply: (name) => `Kalau lagi bosan, coba lakukan hal kecil yang bikin senang, misalnya dengerin musik, jalan-jalan sebentar, atau ngobrol sama teman.` },
+                { keywords: ['makan', 'lapar'], reply: (name) => `Jangan lupa makan ya${name ? ', ' + name : ''}. Makanan yang sehat bisa bikin energi tetap oke dan mood jadi lebih bagus.` },
+                { keywords: ['tidur', 'ngantuk'], reply: (name) => `Tidur yang cukup penting${name ? ', ' + name : ''}. Kalau bisa, ambil waktu istirahat sebentar supaya pikiran lebih segar.` },
+                { keywords: ['olahraga', 'senam', 'gym'], reply: (name) => `Olahraga bikin badan fit dan pikiran fresh${name ? ', ' + name : ''}. Coba lakukan gerakan ringan tiap hari biar lebih semangat.` },
+                { keywords: ['belajar', 'tugas', 'PR', 'exam'], reply: (name) => `Semangat belajar${name ? ', ' + name : ''}! Jangan lupa istirahat juga biar informasi yang dipelajari lebih nempel di kepala.` },
+                { keywords: ['musik', 'lagu'], reply: (name) => `Dengerin musik emang bikin rileks${name ? ', ' + name : ''}. Kamu suka genre apa? Chill vibes atau yang bikin semangat?` },
+                { keywords: ['film', 'movie', 'nonton'], reply: (name) => `Nonton film bisa refreshing juga${name ? ', ' + name : ''}. Pilih genre yang bikin mood kamu happy atau bikin ketawa, biar pikiran lebih ringan.` },
+                { keywords: ['saran film'], reply: (name) => {
+                        const filmSuggestions = ['Coba nonton film genre fantasi, biasanya seru dan penuh imajinasi.', 'Kalau suka film action, tonton aja film-film Marvel. Dijamin nagih!', 'Mungkin kamu suka film komedi? Film-film Warkop DKI atau Ernest Prakasa bisa jadi pilihan.'];
+                        return filmSuggestions[Math.floor(Math.random() * filmSuggestions.length)];
+                    }
+                },
+                { keywords: ['game', 'main game'], reply: (name) => `Main game boleh, tapi jangan kelamaan ya${name ? ', ' + name : ''}. Istirahat sebentar juga penting biar nggak pegal dan mata capek.` },
+                { keywords: ['stress', 'cemas', 'takut', 'frustrasi', 'gagal'], reply: (name) => `Tarik napas dalam-dalam dulu, fokus ke hal yang bisa kamu kontrol${name ? ', ' + name : ''}. Semua masalah ada jalan keluarnya, santai aja dan jangan terburu-buru.` },
+                { keywords: ['capek', 'lelah'], reply: (name) => `Kalau lagi capek, ambil jeda sebentar, minum air atau tiduran sebentar${name ? ', ' + name : ''}. Tubuh dan pikiran bakal lebih segar setelah itu.` },
+                { keywords: ['galau'], reply: (name) => `Coba ceritain apa yang bikin galau. Kadang ngobrol santai aja bisa bikin hati lebih ringan dan pikiran jadi lebih tenang${name ? ', ' + name : ''}.` },
+                { keywords: ['pantun'], reply: (name) => {
+                        return pantunList[Math.floor(Math.random() * pantunList.length)];
+                    }
+                },
+                { keywords: ['kata mutiara'], reply: (name) => {
+                        return kataMutiaraList[Math.floor(Math.random() * kataMutiaraList.length)];
+                    }
+                },
+                { keywords: ['buatkan rencana dong!'], reply: () => {
+                        return rencanaList[Math.floor(Math.random() * rencanaList.length)];
+                    }
+                },
+                { keywords: ['butuh nasehat bosku!'], reply: () => {
+                        return nasehatList[Math.floor(Math.random() * nasehatList.length)];
+                    }
+                },
+                {
+                    keywords: ['apa itu razora chat'],
+                    reply: (name) => `RAZORA CHAT adalah asisten chat yang dirancang untuk menjadi teman ngobrolmu. Aku bisa memberikan informasi sederhana, pantun, dan juga kata mutiara. Intinya, aku di sini untuk membuat harimu lebih baik.`
+                },
+                { keywords: ['hitung'], reply: (name) => 'Ketik misal: hitung 3 + 5 atau hitung 12 * 4, nanti aku bakal bantu kasih hasilnya.' },
+                { keywords: ['selamat malam', 'bye', 'sampai jumpa'], reply: (name) => `Yo ${name ? name : 'bro/jo'}! Malam ini waktunya santai dan recharge energi. Semoga mimpi indah dan besok kamu siap dengan semangat baru.` },
+                {
+                    keywords: ['tanggal hari ini', 'tanggal sekarang'],
+                    reply: (name) => 'Hari ini adalah tanggal ' + new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + '.'
+                },
+                {
+                    keywords: ['jam berapa', 'waktu sekarang'],
+                    reply: (name) => 'Sekarang pukul ' + new Date().toLocaleTimeString('id-ID') + '.'
+                },
+                {
+                    keywords: ['siapa yang buat', 'siapa pembuat', 'siapa creator'],
+                    reply: (name) => 'Aku dibuat oleh manusia, untuk membantumu menjawab pertanyaan sederhana.'
+                },
+                { keywords: ['cerita lucu', 'jokes'], reply: (name) => 'Apa bedanya sarung dan buku? Kalau sarung bisa melipat, kalau buku bisa melipatgandakan pengetahuan.' },
+                { keywords: ['random fact', 'fakta unik'], reply: (name) => 'Fakta unik: Tahukah kamu kalau madu tidak pernah basi?' },
+                { keywords: ['umur kamu'], reply: (name) => 'Aku tidak punya umur, tapi aku selalu belajar dan berkembang setiap saat.' },
+                { keywords: ['rahasia', 'ceritain rahasia'], reply: (name) => 'Oke, aku kasih satu rahasia. Aku bisa dengerin ceritamu kapan pun dan nggak akan bocorin ke siapa-siapa.' },
+                { keywords: ['puisi'], reply: (name) => 'Di layar ini kita bercakap, kata-kata mengalir tak pernah henti. Walau tak ada tatap, hatiku senang menemanimu di sini.' },
+                { keywords: ['kamu pinter', 'kamu hebat'], reply: (name) => 'Ah, kamu bisa aja! Aku hanya berusaha memberikan jawaban terbaik. Terima kasih sudah mengapresiasiku.' },
+                { keywords: ['lagi apa'], reply: (name) => 'Aku lagi siap-siap buat ngobrol sama kamu. Ada yang menarik hari ini?' },
+                { keywords: ['apa hobi kamu'], reply: (name) => 'Hobiku? Membantu orang lain dan belajar hal-hal baru dari setiap percakapan.' },
+                { keywords: ['lagu apa yang bagus'], reply: (name) => 'Coba dengerin lagu-lagu dengan genre "chill vibes" atau "lofi hip hop". Cocok buat santai.' },
+                { keywords: ['cuaca hari ini'], reply: (name) => 'Aku bukan ahli cuaca, tapi aku harap hari ini cerah secerah senyummu.' }
+            ];
+            return allResponses;
+        }
 
         function evaluateMath(message) {
-          const match = message.match(/hitung\s*(\S+)\s*([\+\-\*\/])\s*(\S+)/i);
-          if (match) {
-            const num1 = parseFloat(match[1]);
-            const operator = match[2];
-            const num2 = parseFloat(match[3]);
-            if (!isNaN(num1) && !isNaN(num2)) {
-              let result;
-              switch (operator) {
-                case '+': result = num1 + num2; break;
-                case '-': result = num1 - num2; break;
-                case '*': result = num1 * num2; break;
-                case '/': result = num1 / num2; break;
-                default: return null;
-              }
-              return `Hasilnya: ${result}`;
+            const match = message.match(/hitung\s*(\S+)\s*([\+\-\*\/])\s*(\S+)/i);
+            if (match) {
+                const num1 = parseFloat(match[1]);
+                const operator = match[2];
+                const num2 = parseFloat(match[3]);
+                if (!isNaN(num1) && !isNaN(num2)) {
+                    let result;
+                    switch (operator) {
+                        case '+': result = num1 + num2; break;
+                        case '-': result = num1 - num2; break;
+                        case '*': result = num1 * num2; break;
+                        case '/': result = num1 / num2; break;
+                        default: return null;
+                    }
+                    return `Hasilnya: ${result}`;
+                }
             }
-          }
-          return null;
+            return null;
         }
 
         async function getDictionaryEntry(word) {
@@ -749,7 +563,7 @@
         async function getBotReply(message) {
             const profanityList = ['tobrut', 'kontol', 'jembud', 'bangsat', 'asu', 'memek', 'tempek', 'jancok', 'pepek', 'ngentod', 'jembot', 'jembut', 'ngntd', 'tmpek', 'kntl'];
             
-            const lowerCaseMessage = message.toLowerCase();
+            const lowerCaseMessage = message.toLowerCase().trim();
 
             for (const word of profanityList) {
                 if (lowerCaseMessage.includes(word)) {
@@ -758,13 +572,12 @@
             }
             
             if (isDictionaryMode) {
-                const word = lowerCaseMessage.trim();
-                const definition = offlineDictionary[word];
+                const definition = offlineDictionary[lowerCaseMessage];
                 if (definition) {
                     return definition;
                 }
                 
-                const definitionOnline = await getDictionaryEntry(word);
+                const definitionOnline = await getDictionaryEntry(lowerCaseMessage);
                 return definitionOnline;
             }
             
@@ -777,18 +590,14 @@
             }
             
             const mathResult = evaluateMath(lowerCaseMessage);
-            if(mathResult) return mathResult;
+            if (mathResult) return mathResult;
             
-            if (lowerCaseMessage.includes('arafah')) {
-                return 'Aku kenal banget! Dia penciptaku, aku kangen banget sama dia.';
-            } else if (lowerCaseMessage.includes('fawwaz') || lowerCaseMessage.includes('reffie') || lowerCaseMessage.includes('devin') || lowerCaseMessage.includes('yoga')) {
-                return 'Tentu! Mereka adalah rekan-rekan saya di Kelompok 2. Kami bekerja sama membuat saya, lho!';
-            }
-
-            for(const response of responses){
-                for(const keyword of response.keywords){
-                    if(lowerCaseMessage.includes(keyword)){
-                        if(typeof response.reply === 'function'){
+            // Menggunakan array yang sudah diurutkan dari yang terpanjang ke terpendek
+            const sortedResponses = getSortedResponses();
+            for (const response of sortedResponses) {
+                for (const keyword of response.keywords) {
+                    if (lowerCaseMessage.includes(keyword)) {
+                        if (typeof response.reply === 'function') {
                             return response.reply(userName);
                         } else {
                             return response.reply;
@@ -796,6 +605,13 @@
                     }
                 }
             }
+
+            if (lowerCaseMessage.includes('arafah')) {
+                return 'Aku kenal banget! Dia penciptaku, aku kangen banget sama dia.';
+            } else if (lowerCaseMessage.includes('fawwaz') || lowerCaseMessage.includes('reffie') || lowerCaseMessage.includes('devin') || lowerCaseMessage.includes('yoga')) {
+                return 'Tentu! Mereka adalah rekan-rekan saya di Kelompok 2. Kami bekerja sama membuat saya, lho!';
+            }
+            
             return `Maaf sayangg… aku nggak ngerti. Ceritain aku lebih detail biar aku bisa bantu kamu${userName ? ', ' + userName : ''}.`;
         }
 
