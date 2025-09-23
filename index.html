@@ -148,11 +148,11 @@
             z-index: 2000;
         }
         
-        /* Gaya untuk dropdown menu - Modifikasi untuk animasi fade in/out */
+        /* Gaya untuk dropdown menu - Modifikasi untuk posisi */
         .dropdown-menu {
             position: absolute;
-            top: 0; 
-            left: 0; 
+            top: 50px; /* Atur posisi di bawah menu icon */
+            left: 10px; 
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
@@ -161,32 +161,28 @@
             display: flex;
             flex-direction: column;
             width: 200px; 
-            height: 100%;
             
-            opacity: 0; /* Mulai dengan transparansi penuh */
-            visibility: hidden; /* Sembunyikan dari interaksi kursor */
-            transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Transisi untuk fade dan visibility */
+            opacity: 0; 
+            visibility: hidden; 
+            transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
         }
-
-        /* Kelas untuk menampilkan menu */
         .dropdown-menu.active {
-            opacity: 1; /* Tampilkan dengan opacity penuh */
-            visibility: visible; /* Buat bisa di-klik */
-            transition: opacity 0.3s ease-in-out; /* Hapus delay saat muncul */
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease-in-out;
         }
-
         .dropdown-menu a {
             padding: 12px 18px; 
             text-decoration: none;
             color: #555;
             display: block;
-            transition: background-color 0.2s, color 0.2s, transform 0.2s; /* Added transform for pop-up effect */
+            transition: background-color 0.2s, color 0.2s, transform 0.2s; 
             font-weight: 500;
         }
         .dropdown-menu a:hover {
             background-color: #f0f4f8; 
             color: #007bff; 
-            transform: scale(1.05); /* Pop-up effect on hover */
+            transform: scale(1.05); 
         }
         .dropdown-menu a:not(:last-child) {
             border-bottom: 1px solid #e0e0e0; 
@@ -228,11 +224,11 @@
             color: white;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s; /* Added transform for pop-up effect */
+            transition: background-color 0.3s, transform 0.2s; 
         }
         .anggota-page .back-button:hover {
             background-color: #0056b3;
-            transform: scale(1.05); /* Pop-up effect on hover */
+            transform: scale(1.05); 
         }
 
         @keyframes slideInRight {
@@ -251,16 +247,15 @@
 </head>
 <body>
     <div class="main-container">
-        <span class="menu-icon" id="menuIcon">...</span>
-        <div class="dropdown-menu" id="dropdownMenu">
-            <a href="#" id="kelompok2Button">Kelompok 2</a>
-            <a href="#" id="aboutRazoraButton">Apa Itu Razora Chat?</a>
-            <a href="#" id="kataMutiaraButton">Kata Mutiara</a>
-        </div>
-        
         <div class="chat-container" id="chatContainer">
             <div class="chat-header" id="chatHeader">
                 RAZORA CHAT
+                <span class="menu-icon" id="menuIcon">...</span>
+            </div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#" id="kelompok2Button">Kelompok 2</a>
+                <a href="#" id="aboutRazoraButton">Apa Itu Razora Chat?</a>
+                <a href="#" id="kataMutiaraButton">Kata Mutiara</a>
             </div>
             <div class="chat-messages" id="messages">
                 <div class="message bot-message">Halo! Saya adalah RAZORA CHAT, siap membantu Anda.</div>
