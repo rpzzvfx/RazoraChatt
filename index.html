@@ -258,6 +258,7 @@
             <a href="#" id="kataMutiaraButton">Kata Mutiara</a>
             <a href="#" id="buatRencanaButton">Buatkan rencana dong!</a>
             <a href="#" id="butuhNasehatButton">Butuh nasehat bosku!</a>
+            <a href="#" id="clearChatButton">Hapus Chat</a>
         </div>
         
         <div class="chat-container" id="chatContainer">
@@ -305,6 +306,7 @@
         const kataMutiaraButton = document.getElementById('kataMutiaraButton');
         const buatRencanaButton = document.getElementById('buatRencanaButton');
         const butuhNasehatButton = document.getElementById('butuhNasehatButton');
+        const clearChatButton = document.getElementById('clearChatButton');
         
         let isDictionaryMode = false;
         let userName = null;
@@ -386,7 +388,6 @@
             "Jangan terlalu keras pada diri sendiri; kesalahan adalah bagian dari belajar."
         ];
 
-        // --- FUNGSI BARU UNTUK MENGHASILKAN TABEL PERKALIAN ---
         function generatePerkalian(number) {
             let table = '';
             for (let i = 1; i <= 25; i++) {
@@ -398,7 +399,6 @@
             return table;
         }
 
-        // --- MENAMBAHKAN FUNGSI BARU UNTUK MENGURUTKAN RESPONSES ---
         function getSortedResponses() {
             const allResponses = [
                 // Perkalian 10 ke atas didahulukan
@@ -585,6 +585,7 @@
                 const nameMatch = lowerCaseMessage.match(/nama (aku|saya|gue|gw) (adalah )?([a-z]+)/i);
                 if (nameMatch && nameMatch[3]) {
                     userName = nameMatch[3].charAt(0).toUpperCase() + nameMatch[3].slice(1);
+                    localStorage.setItem('userName', userName);
                     return `Halo, ${userName}! Senang bertemu denganmu.`;
                 }
             }
@@ -592,7 +593,6 @@
             const mathResult = evaluateMath(lowerCaseMessage);
             if (mathResult) return mathResult;
             
-            // Menggunakan array yang sudah diurutkan dari yang terpanjang ke terpendek
             const sortedResponses = getSortedResponses();
             for (const response of sortedResponses) {
                 for (const keyword of response.keywords) {
@@ -630,6 +630,36 @@
                 typingDiv.remove();
             }
         }
+        
+        function saveChat() {
+            const messages = [];
+            document.querySelectorAll('.message').forEach(msg => {
+                messages.push({
+                    text: msg.textContent,
+                    class: msg.className
+                });
+            });
+            localStorage.setItem('chatHistory', JSON.stringify(messages));
+        }
+
+        function loadChat() {
+            const savedChat = localStorage.getItem('chatHistory');
+            const savedUserName = localStorage.getItem('userName');
+            if (savedChat) {
+                messagesContainer.innerHTML = '';
+                const messages = JSON.parse(savedChat);
+                messages.forEach(msg => {
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = msg.class;
+                    msgDiv.textContent = msg.text;
+                    messagesContainer.appendChild(msgDiv);
+                });
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+            if (savedUserName) {
+                userName = savedUserName;
+            }
+        }
 
         async function sendMessage(message = userInput.value) {
             const userText = message.trim();
@@ -641,6 +671,8 @@
             messagesContainer.appendChild(userMessageDiv);
             userInput.value = '';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            saveChat();
 
             showTypingIndicator();
             const botReply = await getBotReply(userText);
@@ -652,6 +684,8 @@
             messagesContainer.appendChild(botMessageDiv);
 
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            saveChat();
         }
 
         menuIcon.addEventListener('click', (event) => {
@@ -696,6 +730,13 @@
             sendMessage('butuh nasehat bosku!');
         });
 
+        clearChatButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            localStorage.removeItem('chatHistory');
+            messagesContainer.innerHTML = '<div class="message bot-message">Riwayat chat telah dihapus.</div>';
+            dropdownMenu.classList.remove('active');
+        });
+
         backButton.addEventListener('click', () => {
             anggotaPage.style.display = 'none';
             chatContainer.style.display = 'flex';
@@ -714,6 +755,7 @@
                 userInput.placeholder = 'Ketik pesan Anda...';
                 messagesContainer.innerHTML = '<div class="message bot-message">Mode kamus dinonaktifkan. Sekarang kita bisa ngobrol lagi seperti biasa.</div>';
             }
+            localStorage.removeItem('chatHistory');
         });
 
         sendButton.addEventListener('click', () => sendMessage());
@@ -723,6 +765,8 @@
                 sendMessage();
             }
         });
+        
+        window.addEventListener('load', loadChat);
     </script>
 </body>
 </html>
