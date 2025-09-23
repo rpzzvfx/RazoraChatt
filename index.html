@@ -257,6 +257,7 @@
             <a href="#" id="aboutRazoraButton">Apa Itu Razora Chat?</a>
             <a href="#" id="kataMutiaraButton">Kata Mutiara</a>
             <a href="#" id="buatRencanaButton">Buatkan rencana dong!</a>
+            <a href="#" id="butuhNasehatButton">Butuh nasehat bosku!</a>
         </div>
         
         <div class="chat-container" id="chatContainer">
@@ -303,6 +304,7 @@
         const aboutRazoraButton = document.getElementById('aboutRazoraButton');
         const kataMutiaraButton = document.getElementById('kataMutiaraButton');
         const buatRencanaButton = document.getElementById('buatRencanaButton');
+        const butuhNasehatButton = document.getElementById('butuhNasehatButton');
         
         let isDictionaryMode = false;
         let userName = null;
@@ -354,6 +356,34 @@
             "Rencana Kebaikan Sosial\nMemberikan kontribusi nyata untuk masyarakat, misalnya donasi, dukungan kegiatan sosial, atau membantu tetangga dan komunitas.",
             "Rencana Teknologi dan Inovasi\nMenciptakan alat, aplikasi, atau sistem yang memudahkan hidup orang lain dan tetap bermanfaat setelah kita tiada.",
             "Rencana Peringatan dan Upacara\nMenyiapkan pesan, video, atau catatan yang bisa dibagikan dalam peringatan hidup, sehingga kenangan tetap hangat dan inspiratif."
+        ];
+
+        const nasehatList = [
+            "Jangan menunda-nunda pekerjaan, selesaikan hari ini apa yang bisa dilakukan sekarang.",
+            "Dengarkan orang lain dengan sungguh-sungguh sebelum memberi penilaian.",
+            "Rawat kesehatan tubuh dan pikiran karena keduanya saling memengaruhi.",
+            "Belajar dari kegagalan, jangan hanya fokus pada kesuksesan.",
+            "Jaga hubungan baik dengan keluarga dan teman; mereka adalah support system yang tak ternilai.",
+            "Bersyukurlah atas hal kecil, karena kebahagiaan sering tersembunyi di hal sederhana.",
+            "Tetapkan tujuan yang jelas, lalu buat langkah-langkah kecil untuk mencapainya.",
+            "Jangan takut mencoba hal baru; pengalaman adalah guru terbaik.",
+            "Hematlah dalam pengeluaran, tapi jangan pelit pada pengalaman dan ilmu.",
+            "Berikan waktu untuk diri sendiri; refleksi diri membantu menemukan arah hidup.",
+            "Bicara dengan jujur, tapi tetap sopan dan penuh empati.",
+            "Hargai proses, bukan hanya hasil akhir.",
+            "Pelajari keterampilan baru setiap waktu, jangan berhenti belajar.",
+            "Jangan membandingkan diri dengan orang lain; fokus pada perkembangan diri sendiri.",
+            "Tersenyumlah, karena senyum bisa mengubah suasana hati sendiri dan orang lain.",
+            "Kendalikan emosi sebelum mengambil keputusan penting.",
+            "Jangan takut meminta bantuan saat membutuhkannya.",
+            "Sisihkan waktu untuk beristirahat, tubuh juga butuh pemulihan.",
+            "Hargai waktu; sekali hilang, tidak bisa dikembalikan.",
+            "Berpikir positif, tapi realistis; jangan hidup dalam ilusi.",
+            "Catat dan syukuri pencapaian kecil setiap hari.",
+            "Buang kebiasaan buruk sedikit demi sedikit, jangan menunggu sempurna.",
+            "Ajarkan kebaikan kepada orang lain, karena memberi juga menerima.",
+            "Berani mengambil risiko yang diperhitungkan untuk mencapai mimpi.",
+            "Jangan terlalu keras pada diri sendiri; kesalahan adalah bagian dari belajar."
         ];
 
         const responses = [
@@ -475,6 +505,12 @@
             keywords: ['buatkan rencana dong!'],
             reply: () => {
               return rencanaList[Math.floor(Math.random() * rencanaList.length)];
+            }
+          },
+          { 
+            keywords: ['butuh nasehat bosku!'], 
+            reply: () => {
+              return nasehatList[Math.floor(Math.random() * nasehatList.length)];
             }
           },
           {
@@ -719,6 +755,12 @@
             event.preventDefault();
             dropdownMenu.classList.remove('active');
             sendMessage('buatkan rencana dong!');
+        });
+
+        butuhNasehatButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            dropdownMenu.classList.remove('active');
+            sendMessage('butuh nasehat bosku!');
         });
 
         backButton.addEventListener('click', () => {
