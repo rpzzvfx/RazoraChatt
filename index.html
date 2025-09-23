@@ -180,12 +180,13 @@
             text-decoration: none;
             color: #555;
             display: block;
-            transition: background-color 0.2s, color 0.2s;
+            transition: background-color 0.2s, color 0.2s, transform 0.2s; /* Added transform for pop-up effect */
             font-weight: 500;
         }
         .dropdown-menu a:hover {
             background-color: #f0f4f8; 
             color: #007bff; 
+            transform: scale(1.05); /* Pop-up effect on hover */
         }
         .dropdown-menu a:not(:last-child) {
             border-bottom: 1px solid #e0e0e0; 
@@ -227,10 +228,11 @@
             color: white;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s; /* Added transform for pop-up effect */
         }
         .anggota-page .back-button:hover {
             background-color: #0056b3;
+            transform: scale(1.05); /* Pop-up effect on hover */
         }
 
         @keyframes slideInRight {
