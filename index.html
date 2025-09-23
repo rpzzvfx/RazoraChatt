@@ -386,7 +386,120 @@
             "Jangan terlalu keras pada diri sendiri; kesalahan adalah bagian dari belajar."
         ];
 
+        // --- FUNGSI BARU UNTUK MENGHASILKAN TABEL PERKALIAN ---
+        function generatePerkalian(number) {
+            let table = '';
+            for (let i = 1; i <= 25; i++) {
+                table += `${number} x ${i} = ${number * i}`;
+                if (i < 25) {
+                    table += ' | ';
+                }
+            }
+            return table;
+        }
+
         const responses = [
+          // --- MENAMBAHKAN RESPONS BARU UNTUK PERKALIAN 1-25 ---
+          { 
+            keywords: ['perkalian 1'], 
+            reply: () => generatePerkalian(1)
+          },
+          { 
+            keywords: ['perkalian 2'], 
+            reply: () => generatePerkalian(2)
+          },
+          { 
+            keywords: ['perkalian 3'], 
+            reply: () => generatePerkalian(3)
+          },
+          { 
+            keywords: ['perkalian 4'], 
+            reply: () => generatePerkalian(4)
+          },
+          { 
+            keywords: ['perkalian 5'], 
+            reply: () => generatePerkalian(5)
+          },
+          { 
+            keywords: ['perkalian 6'], 
+            reply: () => generatePerkalian(6)
+          },
+          { 
+            keywords: ['perkalian 7'], 
+            reply: () => generatePerkalian(7)
+          },
+          { 
+            keywords: ['perkalian 8'], 
+            reply: () => generatePerkalian(8)
+          },
+          { 
+            keywords: ['perkalian 9'], 
+            reply: () => generatePerkalian(9)
+          },
+          { 
+            keywords: ['perkalian 10'], 
+            reply: () => generatePerkalian(10)
+          },
+          { 
+            keywords: ['perkalian 11'], 
+            reply: () => generatePerkalian(11)
+          },
+          { 
+            keywords: ['perkalian 12'], 
+            reply: () => generatePerkalian(12)
+          },
+          { 
+            keywords: ['perkalian 13'], 
+            reply: () => generatePerkalian(13)
+          },
+          { 
+            keywords: ['perkalian 14'], 
+            reply: () => generatePerkalian(14)
+          },
+          { 
+            keywords: ['perkalian 15'], 
+            reply: () => generatePerkalian(15)
+          },
+          { 
+            keywords: ['perkalian 16'], 
+            reply: () => generatePerkalian(16)
+          },
+          { 
+            keywords: ['perkalian 17'], 
+            reply: () => generatePerkalian(17)
+          },
+          { 
+            keywords: ['perkalian 18'], 
+            reply: () => generatePerkalian(18)
+          },
+          { 
+            keywords: ['perkalian 19'], 
+            reply: () => generatePerkalian(19)
+          },
+          { 
+            keywords: ['perkalian 20'], 
+            reply: () => generatePerkalian(20)
+          },
+          { 
+            keywords: ['perkalian 21'], 
+            reply: () => generatePerkalian(21)
+          },
+          { 
+            keywords: ['perkalian 22'], 
+            reply: () => generatePerkalian(22)
+          },
+          { 
+            keywords: ['perkalian 23'], 
+            reply: () => generatePerkalian(23)
+          },
+          { 
+            keywords: ['perkalian 24'], 
+            reply: () => generatePerkalian(24)
+          },
+          { 
+            keywords: ['perkalian 25'], 
+            reply: () => generatePerkalian(25)
+          },
           { 
             keywords: ['+lp','+lapo','+lpo','tambah lapo','tmbh lp','tmbah lapo'], 
             reply: () => "yo awakmu iku sen tambah lapo lee, wenakk wenak"
