@@ -256,6 +256,7 @@
             <a href="#" id="kelompok2Button">Kelompok 2</a>
             <a href="#" id="aboutRazoraButton">Apa Itu Razora Chat?</a>
             <a href="#" id="kataMutiaraButton">Kata Mutiara</a>
+            <a href="#" id="buatRencanaButton">Buatkan rencana dong!</a>
         </div>
         
         <div class="chat-container" id="chatContainer">
@@ -301,6 +302,7 @@
         const kelompok2Button = document.getElementById('kelompok2Button');
         const aboutRazoraButton = document.getElementById('aboutRazoraButton');
         const kataMutiaraButton = document.getElementById('kataMutiaraButton');
+        const buatRencanaButton = document.getElementById('buatRencanaButton');
         
         let isDictionaryMode = false;
         let userName = null;
@@ -339,6 +341,19 @@
             "Mimpimu adalah peta jalan menuju masa depan yang kamu inginkan.",
             "Bahagia tidak datang dari luar, tapi dari dalam dirimu sendiri.",
             "Tersenyumlah, karena senyummu bisa mengubah dunia, tapi jangan biarkan dunia mengubah senyummu."
+        ];
+
+        const rencanaList = [
+            "Rencana Kedamaian Batin\nFokus pada meninggalkan ketenangan untuk orang-orang terdekat melalui kenangan positif, catatan refleksi, atau pesan hangat.",
+            "Rencana Warisan Kreatif\nMenciptakan karya seni, musik, tulisan, atau proyek kreatif yang bisa dinikmati orang lain dan terus dikenang.",
+            "Rencana Alam dan Lingkungan\nMemberikan dampak positif bagi bumi, misalnya dengan menanam pohon, mendukung konservasi, atau membuat ruang hijau komunitas.",
+            "Rencana Koneksi Sosial\nMenguatkan hubungan keluarga dan teman, berbagi pengalaman hidup, atau menulis pesan yang akan tetap dikenang.",
+            "Rencana Pendidikan dan Ilmu\nBerbagi pengalaman dan pengetahuan melalui panduan, kursus, atau cerita hidup sehingga orang lain bisa belajar dari kita.",
+            "Rencana Inspirasi Moral\nMenjadi contoh nilai positif, seperti kerja keras, keberanian, dan empati, agar bisa menginspirasi orang-orang yang ditinggalkan.",
+            "Rencana Kenangan Positif\nMeninggalkan catatan lucu, foto, video, atau cerita unik agar orang lain tersenyum saat mengenang kita.",
+            "Rencana Kebaikan Sosial\nMemberikan kontribusi nyata untuk masyarakat, misalnya donasi, dukungan kegiatan sosial, atau membantu tetangga dan komunitas.",
+            "Rencana Teknologi dan Inovasi\nMenciptakan alat, aplikasi, atau sistem yang memudahkan hidup orang lain dan tetap bermanfaat setelah kita tiada.",
+            "Rencana Peringatan dan Upacara\nMenyiapkan pesan, video, atau catatan yang bisa dibagikan dalam peringatan hidup, sehingga kenangan tetap hangat dan inspiratif."
         ];
 
         const responses = [
@@ -454,6 +469,12 @@
             keywords: ['kata mutiara'], 
             reply: (name) => {
               return kataMutiaraList[Math.floor(Math.random() * kataMutiaraList.length)];
+            }
+          },
+          { 
+            keywords: ['buatkan rencana dong!'],
+            reply: () => {
+              return rencanaList[Math.floor(Math.random() * rencanaList.length)];
             }
           },
           {
@@ -692,6 +713,12 @@
             event.preventDefault();
             dropdownMenu.classList.remove('active');
             sendMessage('kata mutiara');
+        });
+        
+        buatRencanaButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            dropdownMenu.classList.remove('active');
+            sendMessage('buatkan rencana dong!');
         });
 
         backButton.addEventListener('click', () => {
